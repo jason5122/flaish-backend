@@ -1,47 +1,72 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { JSX } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import ButtonSignin from "./ButtonSignin";
 import logo from "@/app/icon.png";
 import config from "@/config";
+import PressableButton from "./PressableButton";
+import { FaMoon } from "react-icons/fa6";
+import { PiSunLight } from "react-icons/pi";
 
 const links: {
   href: string;
   label: string;
 }[] = [
   {
-    href: "/#pricing",
-    label: "Pricing",
+    href: "/#home",
+    label: "Home",
   },
   {
-    href: "/#testimonials",
-    label: "Reviews",
+    href: "/#about",
+    label: "About",
   },
   {
-    href: "/#faq",
-    label: "FAQ",
+    href: "/#contact",
+    label: "Contact",
   },
 ];
-
-const cta: JSX.Element = <ButtonSignin extraStyle="btn-primary" />;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
 const Header = () => {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   // setIsOpen(false) when the route changes (i.e: when the user clicks on a link on mobile)
   useEffect(() => {
     setIsOpen(false);
   }, [searchParams]);
 
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setIsDarkMode(prefersDark);
+    document.body.classList.toggle("dark-mode", prefersDark);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches);
+      document.body.classList.toggle("dark-mode", e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  const toggleTheme = (): void => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.classList.toggle("dark-mode", newTheme);
+  };
+
   return (
-    <header className="bg-base-200">
+    <header className="w-full bg-transparent">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
@@ -105,7 +130,17 @@ const Header = () => {
         </div>
 
         {/* CTA on large screens */}
-        <div className="hidden lg:flex lg:justify-end lg:flex-1">{cta}</div>
+        <div className="flex space-x-4 pl-4">
+          <button onClick={toggleTheme} title="theme-toggle-btn">
+            {isDarkMode ? <FaMoon /> : <PiSunLight />}
+          </button>
+          <div className="hidden lg:flex lg:justify-end lg:flex-1">
+            <PressableButton
+              text="Sign up"
+              extraStyle="bg-[#4ABFE0] text-white"
+            />
+          </div>
+        </div>
       </nav>
 
       {/* Mobile menu, show/hide based on menu state. */}
@@ -172,7 +207,12 @@ const Header = () => {
             </div>
             <div className="divider"></div>
             {/* Your CTA on small screens */}
-            <div className="flex flex-col">{cta}</div>
+            <div className="flex flex-col">
+              <PressableButton
+                text="Sign up"
+                extraStyle="bg-[#4ABFE0] text-white"
+              />
+            </div>
           </div>
         </div>
       </div>
