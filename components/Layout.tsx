@@ -5,7 +5,7 @@ import Header from "./Header";
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full h-full flex flex-col justify-between">
-      <header>
+      <header className="w-full">
         <Header />
       </header>
       <main>{children}</main>
