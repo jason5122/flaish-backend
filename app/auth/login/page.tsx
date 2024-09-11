@@ -1,7 +1,7 @@
 "use client";
 
+import { Layout } from "@/components";
 import CustomInput from "@/components/CustomInput";
-import Layout from "@/components/Layout";
 import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";
