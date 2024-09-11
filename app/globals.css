@@ -2,21 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  scroll-behavior: smooth !important;
+* {
+  color: "#041E39";
 }
 
-/* It makes the HTML progress bar filling smooth when value change. */
+html,
+body {
+  color: "#041E39";
+  background-color: "#FAFAF9";
+  scroll-behavior: smooth;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+[data-theme="dark"] body {
+  color: #FAFAF9;
+  background-color: #041E39;
+}
+
 progress::-webkit-progress-value {
   transition: 0.6s width ease-out;
 }
 
 @layer base {
   .btn-gradient {
-    @apply !bg-gradient !bg-[length:300%_300%] hover:saturate-[1.2] shadow duration-100 !border-0 !border-transparent !bg-transparent animate-shimmer disabled:!bg-none disabled:!bg-gray-500/30  !text-white;
-  }
-  .btn {
-    @apply !capitalize;
+    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+    @apply hover:bg-gradient-to-l duration-150 ease-in-out;
+    @apply text-white font-semibold px-4 py-2 rounded-lg shadow-lg;
   }
 }
