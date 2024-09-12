@@ -5,11 +5,25 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./styles/globals.css",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       backgroundImage: {
         gradient:
           "linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82)",
+      },
+      boxShadow: {
+        'custom': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+      },
+      colors: {
+        darkbg: "#041E39",
+        lightbg: "#FAFAF9",
+        lightText: "#041E39",
+        darkText: "#FAFAF9",
+        primary: "#4AC0E0",
+        secondary: "#166294",
+        tertiary: "#4ABFE0",
+        accent: "#D4DFEE",
       },
       animation: {
         opacity: "opacity 0.25s ease-in-out",
