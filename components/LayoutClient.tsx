@@ -9,6 +9,8 @@ import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import { Tooltip } from "react-tooltip";
 import config from "@/config";
+import { ThemeProvider } from "next-themes";
+import { FlashCardProvider } from "@/context/FlashCardContext";
 
 // Crisp customer chat support:
 // This component is separated from ClientLayout because it needs to be wrapped with <SessionProvider> to use useSession() hook
@@ -53,13 +55,15 @@ const CrispChat = (): null => {
 // 5. CrispChat: Set Crisp customer chat support (see above)
 const ClientLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <>
+    <div className="w-[100vw] h-[100vh] relative">
       <SessionProvider>
         {/* Show a progress bar at the top when navigating between pages */}
         <NextTopLoader color={config.colors.main} showSpinner={false} />
 
         {/* Content inside app/page.js files  */}
-        {children}
+        <ThemeProvider>
+          <FlashCardProvider>{children}</FlashCardProvider>
+        </ThemeProvider>
 
         {/* Show Success/Error messages anywhere from the app with toast() */}
         <Toaster
@@ -77,7 +81,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
         {/* Set Crisp customer chat support */}
         <CrispChat />
       </SessionProvider>
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,34 @@
+# Dependency directories
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Production files
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Static folder build cache
+.cache/
+
+# Next.js cache
+.cache/
+.next/cache/
+
+# Typescript
+*.tsbuildinfo
+
+
+# MacOS system files
+.DS_Store
+
+# Logs and reports
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
