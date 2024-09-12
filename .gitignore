@@ -1,3 +1,42 @@
-node_modules
+# Dependency directories
+node_modules/
+.pnp/
+.pnp.js
+
+# Next.js build output
 .next/
-.next
+out/
+
+# Production files
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Static folder build cache
+.cache/
+
+# Next.js cache
+.cache/
+.next/cache/
+
+# Typescript
+*.tsbuildinfo
+
+# Yarn v2
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# MacOS system files
+.DS_Store
+
+# Logs and reports
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
