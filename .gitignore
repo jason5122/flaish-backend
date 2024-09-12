@@ -1,7 +1,5 @@
 # Dependency directories
 node_modules/
-.pnp/
-.pnp.js
 
 # Next.js build output
 .next/
@@ -25,12 +23,6 @@ out/
 # Typescript
 *.tsbuildinfo
 
-# Yarn v2
-.yarn/cache/
-.yarn/unplugged/
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
 
 # MacOS system files
 .DS_Store
