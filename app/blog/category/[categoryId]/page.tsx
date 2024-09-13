@@ -13,6 +13,14 @@ export async function generateMetadata({
     (category) => category.slug === params.categoryId
   );
 
+  if (!category) {
+    return getSEOTags({
+      title: "Category not found",
+      description: "The requested category does not exist.",
+      canonicalUrlRelative: "/blog",
+    });
+  }
+
   return getSEOTags({
     title: `${category.title} | Blog by ${config.appName}`,
     description: category.description,
@@ -28,6 +36,17 @@ export default async function Category({
   const category = categories.find(
     (category) => category.slug === params.categoryId
   );
+
+  if (!category) {
+    // Handle the case where the category is not found, e.g., redirect or show an error
+    return (
+      <section className="text-center mt-12">
+        <h1 className="text-3xl font-bold">Category not found</h1>
+        <p className="mt-4">The requested category does not exist.</p>
+      </section>
+    );
+  }
+
   const articlesInCategory = articles
     .filter((article) =>
       article.categories.map((c) => c.slug).includes(category.slug)

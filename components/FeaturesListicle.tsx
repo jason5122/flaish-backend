@@ -392,30 +392,30 @@ const features: {
 // - Autoscroll the list of features (optional).
 const FeaturesListicle = () => {
   const featuresEndRef = useRef<null>(null);
-  const [featureSelected, setFeatureSelected] = useState<string>(
-    features[0].name
-  );
+  const [featureSelected, setFeatureSelected] = useState<string>(features[0].name);
   const [hasClicked, setHasClicked] = useState<boolean>(false);
 
-  // (Optional) Autoscroll the list of features so user know it's interactive.
-  // Stop scrolling when user scroll after the featuresEndRef element (end of section)
-  // emove useEffect is not needed.
   useEffect(() => {
     const interval = setInterval(() => {
       if (!hasClicked) {
         const index = features.findIndex(
           (feature) => feature.name === featureSelected
         );
-        const nextIndex = (index + 1) % features.length;
-        setFeatureSelected(features[nextIndex].name);
+        if (index !== -1) {
+          const nextIndex = (index + 1) % features.length;
+          const nextFeature = features[nextIndex];
+          if (nextFeature) {
+            setFeatureSelected(nextFeature.name);
+          }
+        }
       }
     }, 5000);
 
     try {
-      // stop the interval when the user scroll after the featuresRef element
+      // stop the interval when the user scrolls past the end of the section
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
+          if (!entry.isIntersecting) {
             console.log("STOP AUTO CHANGE");
             clearInterval(interval);
           }
@@ -423,90 +423,46 @@ const FeaturesListicle = () => {
         {
           root: null,
           rootMargin: "0px",
-          threshold: 0.5,
+          threshold: 0,
         }
       );
+
       if (featuresEndRef.current) {
         observer.observe(featuresEndRef.current);
       }
-    } catch (e) {
-      console.error(e);
+
+      return () => {
+        clearInterval(interval);
+        if (featuresEndRef.current) {
+          observer.unobserve(featuresEndRef.current);
+        }
+      };
+    } catch (error) {
+      console.error(error);
     }
 
     return () => clearInterval(interval);
   }, [featureSelected, hasClicked]);
 
+  // Render your component
   return (
-    <section className="py-24" id="features">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-base-100 max-md:px-8 max-w-3xl">
-          <p className="text-accent font-medium text-sm font-mono mb-3">
-            {/* Pure decoration, you can remove it */}
-            const launch_time = &quot;Today&quot;;
-          </p>
-          <h2 className="font-extrabold text-3xl lg:text-5xl tracking-tight mb-8">
-            {/* 💡 COPY TIP: Remind visitors about the value of your product. Why do they need it? */}
-            Supercharge your app instantly, launch faster, make $
-          </h2>
-          <div className="text-base-content/80 leading-relaxed mb-8 lg:text-lg">
-            {/* 💡 COPY TIP: Explain how your product delivers what you promise in the headline. */}
-            Login users, process payments and send emails at lightspeed. Spend
-            your time building your startup, not integrating APIs. ShipFast
-            provides you with the boilerplate code you need to launch, FAST.
-          </div>
+    <div>
+      {/* Render the list of features */}
+      {features.map((feature) => (
+        <div
+          key={feature.name}
+          onClick={() => {
+            setFeatureSelected(feature.name);
+            setHasClicked(true);
+          }}
+        >
+          {feature.svg}
+          <h2>{feature.name}</h2>
+          {feature.name === featureSelected && feature.description}
         </div>
-      </div>
-
-      <div>
-        <div className="grid grid-cols-4 md:flex justify-start gap-4 md:gap-12 max-md:px-8 max-w-3xl mx-auto mb-8">
-          {features.map((feature) => (
-            <span
-              key={feature.name}
-              onClick={() => {
-                if (!hasClicked) setHasClicked(true);
-                setFeatureSelected(feature.name);
-              }}
-              className={`flex flex-col items-center justify-center gap-3 select-none cursor-pointer p-2 duration-200 group`}
-            >
-              <span
-                className={`duration-100 ${
-                  featureSelected === feature.name
-                    ? "text-primary"
-                    : "text-base-content/30 group-hover:text-base-content/50"
-                }`}
-              >
-                {feature.svg}
-              </span>
-              <span
-                className={`font-semibold text-sm ${
-                  featureSelected === feature.name
-                    ? "text-primary"
-                    : "text-base-content/50"
-                }`}
-              >
-                {feature.name}
-              </span>
-            </span>
-          ))}
-        </div>
-        <div className="bg-base-200">
-          <div className="max-w-3xl mx-auto flex flex-col md:flex-row justify-center md:justify-start md:items-center gap-12">
-            <div
-              className="text-base-content/80 leading-relaxed space-y-4 px-12 md:px-0 py-12 max-w-xl animate-opacity"
-              key={featureSelected}
-            >
-              <h3 className="font-semibold text-base-content text-lg">
-                {features.find((f) => f.name === featureSelected)["name"]}
-              </h3>
-
-              {features.find((f) => f.name === featureSelected)["description"]}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Just used to know it's the end of the autoscroll feature (optional, see useEffect) */}
-      <p className="opacity-0" ref={featuresEndRef}></p>
-    </section>
+      ))}
+      <div ref={featuresEndRef} />
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-// Use this if you want to make a call to OpenAI GPT-4 for instance. userId is used to identify the user on openAI side.
 export const sendOpenAi = async (
   messages: any[], // TODO: type this
   userId: number,
@@ -33,7 +32,7 @@ export const sendOpenAi = async (
     const res = await axios.post(url, body, options);
 
     const answer = res.data.choices[0].message.content;
-    const usage = res?.data?.usage;
+    const usage = res.data.usage;
 
     console.log('>>> ' + answer);
     console.log(
@@ -49,7 +48,11 @@ export const sendOpenAi = async (
 
     return answer;
   } catch (e) {
-    console.error('GPT Error: ' + e?.response?.status, e?.response?.data);
+    if (axios.isAxiosError(e)) {
+      console.error('GPT Error: ' + e.response?.status, e.response?.data);
+    } else {
+      console.error('An unexpected error occurred', e);
+    }
     return null;
   }
 };

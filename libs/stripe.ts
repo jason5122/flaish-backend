@@ -18,6 +18,18 @@ interface CreateCustomerPortalParams {
   returnUrl: string;
 }
 
+// Ensure the environment variable is defined
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+  throw new Error("STRIPE_SECRET_KEY is not defined");
+}
+
+// Initialize Stripe with the secret key
+const stripe = new Stripe(stripeSecretKey, {
+  apiVersion: "2023-08-16",
+  typescript: true,
+});
+
 // This is used to create a Stripe Checkout for one-time payments. It's usually triggered with the <ButtonCheckout /> component. Webhooks are used to update the user's state in the database.
 export const createCheckout = async ({
   user,
@@ -27,13 +39,8 @@ export const createCheckout = async ({
   cancelUrl,
   priceId,
   couponId,
-}: CreateCheckoutParams): Promise<string> => {
+}: CreateCheckoutParams): Promise<string | null> => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
-      typescript: true,
-    });
-
     const extraParams: {
       customer?: string;
       customer_creation?: "always";
@@ -48,8 +55,6 @@ export const createCheckout = async ({
     } else {
       if (mode === "payment") {
         extraParams.customer_creation = "always";
-        // The option below costs 0.4% (up to $2) per invoice. Alternatively, you can use https://zenvoice.io/ to create unlimited invoices automatically.
-        // extraParams.invoice_creation = { enabled: true };
         extraParams.payment_intent_data = { setup_future_usage: "on_session" };
       }
       if (user?.email) {
@@ -91,28 +96,23 @@ export const createCheckout = async ({
 export const createCustomerPortal = async ({
   customerId,
   returnUrl,
-}: CreateCustomerPortalParams): Promise<string> => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
-    typescript: true,
-  });
-
-  const portalSession = await stripe.billingPortal.sessions.create({
-    customer: customerId,
-    return_url: returnUrl,
-  });
-
-  return portalSession.url;
-};
-
-// This is used to get the uesr checkout session and populate the data so we get the planId the user subscribed to
-export const findCheckoutSession = async (sessionId: string) => {
+}: CreateCustomerPortalParams): Promise<string | null> => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
-      typescript: true,
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
     });
 
+    return portalSession.url;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+// This is used to get the user checkout session and populate the data so we get the planId the user subscribed to
+export const findCheckoutSession = async (sessionId: string): Promise<any | null> => {
+  try {
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ["line_items"],
     });

@@ -11,6 +11,7 @@ const Hero = () => {
           target="_blank"
           className=" -mb-4 md:-mb-6 group"
           title="Product Hunt link"
+          rel="noopener"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

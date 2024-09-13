@@ -11,6 +11,13 @@ export async function generateMetadata({
 }) {
   const author = authors.find((author) => author.slug === params.authorId);
 
+  if (!author) {
+    return getSEOTags({
+      title: "Author Not Found",
+      description: "The requested author does not exist.",
+      canonicalUrlRelative: "/blog",
+    });
+  }
   return getSEOTags({
     title: `${author.name}, Author at ${config.appName}'s Blog`,
     description: `${author.name}, Author at ${config.appName}'s Blog`,
@@ -23,7 +30,15 @@ export default async function Author({
 }: {
   params: { authorId: string };
 }) {
-  const author = authors.find((author) => author.slug === params.authorId);
+  const author = authors.find((author) => author.slug === params.authorId) ?? {
+    slug: "default",
+    name: "Unknown Author",
+    job: "Unknown",
+    description: "No description available.",
+    avatar: "/path/to/default-avatar.png",
+    socials: [],
+  };
+
   const articlesByAuthor = articles
     .filter((article) => article.author.slug === author.slug)
     .sort(
@@ -57,16 +72,16 @@ export default async function Author({
             className="rounded-box w-[12rem] md:w-[16rem] "
           />
 
-          {author.socials?.length > 0 && (
+          {author?.socials && author.socials.length > 0 && (
             <div className="flex flex-col md:flex-row gap-4">
               {author.socials.map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
                   className="btn btn-square"
-                  // Using a dark theme? -> className="btn btn-square btn-neutral"
                   title={`Go to ${author.name} profile on ${social.name}`}
                   target="_blank"
+                  rel="noopener noreferrer" // For security reasons when opening in a new tab
                 >
                   {social.icon}
                 </a>

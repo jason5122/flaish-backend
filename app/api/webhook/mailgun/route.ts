@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const subject = formData.get("Subject");
     const html = formData.get("body-html");
 
-    // send email to the admin if forwardRepliesTo is et & emailData exists
+    // send email to the admin if forwardRepliesTo is set & emailData exists
     if (config.mailgun.forwardRepliesTo && html && subject && sender) {
       await sendEmail({
         to: config.mailgun.forwardRepliesTo,
@@ -24,7 +24,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({});
   } catch (e) {
-    console.error(e?.message);
-    return NextResponse.json({ error: e?.message }, { status: 500 });
+    console.error(e);
+    // Type narrowing to check if `e` is an instance of Error
+    if (e instanceof Error) {
+      return NextResponse.json({ error: e.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ error: "An unknown error occurred" }, { status: 500 });
+    }
   }
 }

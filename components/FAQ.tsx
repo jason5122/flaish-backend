@@ -3,8 +3,8 @@
 import { useRef, useState } from "react";
 import type { JSX } from "react";
 
-// <FAQ> component is a lsit of <Item> component
-// Just import the FAQ & add your FAQ content to the const faqList arrayy below.
+// <FAQ> component is a list of <Item> components
+// Just import the FAQ & add your FAQ content to the const faqList array below.
 
 interface FAQItemProps {
   question: string;
@@ -34,7 +34,7 @@ const faqList: FAQItemProps[] = [
 ];
 
 const FaqItem = ({ item }: { item: FAQItemProps }) => {
-  const accordion = useRef(null);
+  const accordion = useRef<HTMLDivElement>(null); // Specify the type here
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -45,7 +45,6 @@ const FaqItem = ({ item }: { item: FAQItemProps }) => {
           e.preventDefault();
           setIsOpen(!isOpen);
         }}
-        aria-expanded={isOpen}
       >
         <span
           className={`flex-1 text-base-content ${isOpen ? "text-primary" : ""}`}
@@ -83,7 +82,7 @@ const FaqItem = ({ item }: { item: FAQItemProps }) => {
         className={`transition-all duration-300 ease-in-out opacity-80 overflow-hidden`}
         style={
           isOpen
-            ? { maxHeight: accordion?.current?.scrollHeight, opacity: 1 }
+            ? { maxHeight: accordion.current?.scrollHeight ?? 0, opacity: 1 } // Provide default value
             : { maxHeight: 0, opacity: 0 }
         }
       >

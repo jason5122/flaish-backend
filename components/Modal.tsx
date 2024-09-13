@@ -49,6 +49,7 @@ const Modal = ({ isModalOpen, setIsModalOpen }: ModalProps) => {
                     I&apos;m a modal
                   </Dialog.Title>
                   <button
+                    title="Press to open modal"
                     className="btn btn-square btn-ghost btn-sm"
                     onClick={() => setIsModalOpen(false)}
                   >

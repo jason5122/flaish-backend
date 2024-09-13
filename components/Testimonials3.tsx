@@ -10,13 +10,9 @@ const list: {
   img?: string | StaticImageData;
 }[] = [
   {
-    // Optional, use for social media like Twitter. Does not link anywhere but cool to display
     username: "marclou",
-    // REQUIRED
     name: "Marc Lou",
-    // REQUIRED
     text: "Really easy to use. The tutorials are really useful and explains how everything works. Hope to ship my next project really fast!",
-    // Optional, a statically imported image (usually from your public folder—recommended) or a link to the person's avatar. Shows a fallback letter if not provided
     img: "https://pbs.twimg.com/profile_images/1514863683574599681/9k7PqDTA_400x400.jpg",
   },
   {
@@ -60,13 +56,23 @@ const Testimonial = ({ i }: { i: number }) => {
 
             <div className="overflow-hidden rounded-full bg-base-300 shrink-0">
               {testimonial.img ? (
-                <Image
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
-                  src={list[i].img}
-                  alt={`${list[i].name}'s testimonial for ${config.appName}`}
-                  width={48}
-                  height={48}
-                />
+                typeof testimonial.img === 'string' ? (
+                  <Image
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+                    src={testimonial.img}
+                    alt={`${testimonial.name}'s testimonial for ${config.appName}`}
+                    width={48}
+                    height={48}
+                  />
+                ) : (
+                  <Image
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+                    src={testimonial.img}
+                    alt={`${testimonial.name}'s testimonial for ${config.appName}`}
+                    width={48}
+                    height={48}
+                  />
+                )
               ) : (
                 <span className="w-10 h-10 md:w-12 md:h-12 rounded-full flex justify-center items-center text-lg font-medium bg-base-300">
                   {testimonial.name.charAt(0)}

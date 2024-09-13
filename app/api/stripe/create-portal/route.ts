@@ -43,7 +43,12 @@ export async function POST(req: NextRequest) {
       });
     } catch (e) {
       console.error(e);
-      return NextResponse.json({ error: e?.message }, { status: 500 });
+      // Type narrowing to check if `e` is an instance of Error
+      if (e instanceof Error) {
+        return NextResponse.json({ error: e.message }, { status: 500 });
+      } else {
+        return NextResponse.json({ error: "An unknown error occurred" }, { status: 500 });
+      }
     }
   } else {
     // Not Signed in

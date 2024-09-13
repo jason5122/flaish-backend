@@ -11,7 +11,15 @@ export async function generateMetadata({
 }: {
   params: { articleId: string };
 }) {
-  const article = articles.find((article) => article.slug === params.articleId);
+  const article = articles.find((article) => article?.slug === params.articleId);
+
+  if (!article) {
+    return getSEOTags({
+      title: "Article not found",
+      description: "The requested article does not exist.",
+      canonicalUrlRelative: "/blog",
+    });
+  }
 
   return getSEOTags({
     title: article.title,
@@ -41,7 +49,18 @@ export default async function Article({
 }: {
   params: { articleId: string };
 }) {
-  const article = articles.find((article) => article.slug === params.articleId);
+  const article = articles.find((article) => article?.slug === params.articleId);
+
+  if (!article) {
+    return (
+      <div>
+        <h1>Article Not Found</h1>
+        <p>We couldn't find the article you are looking for.</p>
+        <Link href="/blog">Back to Blog</Link>
+      </div>
+    );
+  }
+
   const articlesRelated = articles
     .filter(
       (a) =>
@@ -151,19 +170,19 @@ export default async function Article({
                 </p>
                 <div className="space-y-2 md:space-y-5">
                   {articlesRelated.map((article) => (
-                    <div className="" key={article.slug}>
+                    <div className="" key={article?.slug}>
                       <p className="mb-0.5">
                         <Link
-                          href={`/blog/${article.slug}`}
+                          href={`/blog/${article?.slug}`}
                           className="link link-hover hover:link-primary font-medium"
-                          title={article.title}
+                          title={article?.title}
                           rel="bookmark"
                         >
-                          {article.title}
+                          {article?.title}
                         </Link>
                       </p>
                       <p className="text-base-content/80 max-w-full text-sm">
-                        {article.description}
+                        {article?.description}
                       </p>
                     </div>
                   ))}
