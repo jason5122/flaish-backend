@@ -1,6 +1,7 @@
 "use client";
 
 import { CustomButton, CustomInput, Layout } from "@/components";
+import ButtonSignin from "@/components/ButtonSignin";
 import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";
@@ -42,9 +43,10 @@ const Login = () => {
               required
             />
           </form>
-          <div className="md:w-[50%] w-full flex justify-center mx-auto">
+          <div className="md:w-[50%] w-full flex flex-col gap-4 justify-center mx-auto">
+            <ButtonSignin text="Login with Google" extraStyle="rounded-[5px]" />
             <CustomButton
-              onClick={() => router.push("/card")}
+              onClick={() => router.push("/dashboard")}
               title="login button"
               text="Login"
               width="100%"

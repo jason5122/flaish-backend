@@ -93,7 +93,7 @@ const Header = () => {
               <Link
                 href={link.href}
                 key={link.href}
-                className="link link-hover text-white hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110 hover:font-bold"
+                className="link link-hover hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110 hover:font-bold"
                 title={link.label}
                 style={{ textDecoration: "none" }}
               >

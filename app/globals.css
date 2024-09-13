@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -13,17 +13,24 @@
 ::-webkit-scrollbar {
   display: none;
 }
-body {
+
+body, html {
   color: "#041E39";
   background-color: "#FAFAF9";
-  scroll-behavior: smooth;
   overflow: scroll;
+  scroll-behavior: smooth;
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 [data-theme="dark"] body {
-  color: #FAFAF9;
-  background-color: #041E39;
+  color: #fafaf9;
+  background-color: #041e39;
+}
+input::placeholder {
+  color: #041e39;
+}
+[data-theme="dark"] input::placeholder {
+  color: #fafaf9;
 }
 
 progress::-webkit-progress-value {

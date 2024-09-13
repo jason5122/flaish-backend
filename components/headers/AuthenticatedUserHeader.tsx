@@ -62,7 +62,7 @@ export default function AuthenticatedUserHeader() {
       </div>
       <div className="w-[48%] flex items-center justify-end space-x-10">
         <ThemeSwitcher />
-        <FaRegUserCircle className="text-2xl" />
+        <FaRegUserCircle className="text-2xl " />
       </div>
       {isOpen && (
         <div className="absolute inset-0 top-[70px] bg-transparent flex flex-col items-start w-fit h-[50%] py-10 px-16 space-y-10 pl-8 rounded-lg z-20">

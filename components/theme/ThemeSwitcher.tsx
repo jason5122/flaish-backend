@@ -18,7 +18,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="items-center space-x-2 hidden md:flex">
       <Switch
         checked={theme === "dark"}
         onChange={toggleTheme}
