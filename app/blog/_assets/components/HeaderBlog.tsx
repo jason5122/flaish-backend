@@ -9,7 +9,7 @@ import Image from "next/image";
 import logo from "@/app/icon.png";
 import config from "@/config";
 import { categories } from "../content";
-import ButtonSignin from "@/components/ButtonSignin";
+import { CustomButton } from "@/components";
 
 const links: {
   href: string;
@@ -22,7 +22,7 @@ const links: {
 ];
 
 const cta: JSX.Element = (
-  <ButtonSignin text="Prevent disputes" extraStyle="btn-primary md:btn-sm" />
+  <CustomButton text="Prevent disputes" title="Prevent Disputes" />
 );
 
 const ButtonPopoverCategories = () => {
@@ -101,8 +101,8 @@ const ButtonAccordionCategories = () => {
           e.preventDefault();
           setIsOpen(!isOpen);
         }}
-        aria-expanded={isOpen}
         type="button"
+        title="categories button"
         className="link no-underline flex justify-between items-center w-full "
       >
         Categories
