@@ -76,6 +76,7 @@ const SignUp = () => {
               title="signup button"
               text="Create Account"
               width="100%"
+              className="rounded-[7px]"
             />
           </div>
         </div>
