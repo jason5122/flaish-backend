@@ -41,7 +41,7 @@ const FlashCardList = () => {
               width={50}
               height={50}
               alt="right caret"
-              className="w-[5%] cursor-pointer"
+              className="w-[5%] cursor-pointer z-50"
               onClick={handleNextCard}
             />
           </div>
