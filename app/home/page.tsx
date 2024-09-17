@@ -1,13 +1,10 @@
 import React from "react";
-import CardDemo from "./CardDemo";
-import Offers from "./Offers";
-import { Seperator } from "@/components";
-import Services from "./Services";
+import { Hero, Offers, Seperator, Services } from "@/components";
 
 const Home = () => {
   return (
     <div className="w-full py-10 px-4 flex flex-col items-center gap-y-10">
-      <CardDemo />
+      <Hero showStartNowComponent={true} />
       <Seperator />
       <Offers />
       <Seperator top={false} />

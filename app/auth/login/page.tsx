@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomButton, CustomInput, Layout } from "@/components";
-import ButtonSignin from "@/components/ButtonSignin";
+import ButtonSignin from "@/components/buttons/ButtonSignin";
 import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";

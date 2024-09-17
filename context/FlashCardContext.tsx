@@ -10,6 +10,7 @@ interface FlashCardContextProps {
   handleNextCard: () => void;
   handlePreviousCard: () => void;
   handleToggleAnswer: () => void;
+  setCardByIndex: (index: number) => void;
   currentCard: { question: string; answer: string };
   totalCards: number;
 }
@@ -30,8 +31,8 @@ export const useFlashCardContext = () => {
 export const FlashCardProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
 
   const handleNextCard = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
@@ -48,6 +49,11 @@ export const FlashCardProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleToggleAnswer = () => {
     setShowAnswer((prev) => !prev);
   };
+  
+  const setCardByIndex = (index: number) => {
+    setCurrentIndex(index);
+    setShowAnswer(false); // Reset the answer view
+  };
 
   const value: FlashCardContextProps = {
     currentIndex,
@@ -57,6 +63,7 @@ export const FlashCardProvider: React.FC<{ children: React.ReactNode }> = ({
     handleToggleAnswer,
     currentCard: flashcards[currentIndex],
     totalCards: flashcards.length,
+    setCardByIndex,
   };
 
   return (

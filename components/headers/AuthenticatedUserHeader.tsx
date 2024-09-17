@@ -79,7 +79,6 @@ export default function AuthenticatedUserHeader() {
                 width={20}
                 height={20}
               />
-              {/* <span className="text-sm">{link.label}</span> */}
             </Link>
           ))}
         </div>

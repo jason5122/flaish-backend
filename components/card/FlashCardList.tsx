@@ -12,7 +12,6 @@ const FlashCardList = () => {
     showAnswer,
     handleToggleAnswer,
     currentIndex,
-    totalCards,
   } = useFlashCardContext(); // Get everything from context
 
   return (

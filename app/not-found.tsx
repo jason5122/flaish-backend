@@ -1,5 +1,5 @@
+import { ButtonSupport } from "@/components";
 import Link from "next/link";
-import ButtonSupport from "@/components/ButtonSupport";
 
 // Simple 404 page with a button to go home and a button to contact support
 // Show a cute SVG with your primary color

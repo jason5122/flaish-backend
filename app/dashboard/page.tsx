@@ -1,6 +1,4 @@
-import Demo from "./Demo";
-import FeaturedCards from "../card/featured/FeaturedCards";
-import { AuthenticatedUserLayout } from "@/components";
+import { AuthenticatedUserLayout, FeaturedCards, Hero } from "@/components";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +9,7 @@ export default async function Dashboard() {
   return (
     <AuthenticatedUserLayout>
       <div className="my-10 flex flex-col gap-y-10 lg:px-20 md:px-10 p-4">
-        <Demo />
+        <Hero showStartNowComponent={false} />
         <FeaturedCards />
       </div>
     </AuthenticatedUserLayout>
