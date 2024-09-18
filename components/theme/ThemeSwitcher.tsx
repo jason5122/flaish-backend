@@ -24,9 +24,14 @@ const ThemeSwitcher = () => {
         onChange={toggleTheme}
         className="relative bg-[#44ADCD]/50 inline-flex h-6 w-14 items-center rounded-full transition-colors focus:outline-none border-2"
       >
+        {theme === "light" && (
+          <span className="inline-block h-4 w-4  transform transition-transform translate-x-1">
+            <PiMoonFill className="text-sm text-white" />
+          </span>
+        )}
         <span
           className={`${
-            theme === "dark" ? "translate-x-[.5]" : "translate-x-8"
+            theme === "dark" ? "translate-x-[.5]" : "translate-x-4"
           } inline-block h-5 w-5 transform rounded-full bg-white transition-transform`}
         />
         {theme === "dark" && (

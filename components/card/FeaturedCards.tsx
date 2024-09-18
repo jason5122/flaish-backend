@@ -14,7 +14,7 @@ const FeaturedCards = () => {
           <CustomSearchBar />
         </div>
         <div className="lg:w-[15%] min-w-[15%] md:w-[50%] w-full">
-          <CustomButton text="Add Card" title="Add Featured Card" className="rounded-[7px]" width="100%" />
+          <CustomButton text="Create your own set" title="Add Featured Card" className="rounded-[7px]" width="100%" />
         </div>
       </div>
       <h2 className="font-regular text-[25px]">Featured Set</h2>
